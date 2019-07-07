@@ -1,1 +1,1 @@
-Demo for a question in https://github.com/golang/protobuf
+For question in https://github.com/golang/protobuf/issues/891
