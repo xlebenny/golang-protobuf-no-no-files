@@ -10,11 +10,7 @@ RUN git -C $GOPATH/src/github.com/golang/protobuf checkout v1.3.1
 RUN go install github.com/golang/protobuf/protoc-gen-go
 
 
-FROM golang:1.12
-
-WORKDIR /temp
-COPY --from=cache /go/bin/protoc-gen-go ./protoc-gen-go
-
+# create test.proto
 RUN echo '\
 syntax = "proto2"; \n\
 package example; \n\
@@ -28,6 +24,9 @@ message Test { \n\
 } \n\
 ' >> ./test.proto
 
+# some debug message
 RUN echo "====./test.proto===" && cat ./test.proto && echo "===ls====" && ls -lR && echo "======="
 
-RUN ./protoc-gen-go --go_out=. ./test.proto
+# run a generate command
+# but it's said `protoc-gen-go: error:no files to generate`
+RUN /go/bin/protoc-gen-go --go_out=. ./test.proto
